@@ -3,6 +3,10 @@ import { TypographyH2 } from "@/components/ui/typography";
 import { createServerSupabaseClient } from "@/lib/server-utils";
 import { redirect } from "next/navigation";
 import AddSpeciesDialog from "./add-species-dialog";
+
+import type { Database } from "@/lib/schema";
+type Species = Database["public"]["Tables"]["species"]["Row"];
+
 import SpeciesCard from "./species-card";
 
 export default async function SpeciesList() {
@@ -19,6 +23,10 @@ export default async function SpeciesList() {
 
   const { data: species } = await supabase.from("species").select("*");
 
+  function SpeciesCardWithSession(a: Species) {
+    return SpeciesCard(a, session ? session.user.id : "");
+  }
+
   return (
     <>
       <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
@@ -27,7 +35,7 @@ export default async function SpeciesList() {
       </div>
       <Separator className="my-4" />
       <div className="flex flex-wrap justify-center">
-        {species?.map((species) => <SpeciesCard key={species.id} {...species} />)}
+        {species?.map((species) => <SpeciesCardWithSession key={species.id} {...species} />)}
       </div>
     </>
   );
