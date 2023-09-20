@@ -28,6 +28,9 @@ export default async function SpeciesList() {
   }
 
   species?.sort(function (a, b) {
+    if (a.common_name == null || b.common_name == null) {
+      return 1;
+    }
     return a.common_name.localeCompare(b.common_name);
   });
   /* eslint-disable no-console */
