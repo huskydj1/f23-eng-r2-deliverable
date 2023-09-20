@@ -7,7 +7,7 @@ type Species = Database["public"]["Tables"]["species"]["Row"];
 
 export default function SpeciesCard(species: Species, userId: string) {
   /* eslint-disable no-console */
-  console.log(species);
+  // console.log(species);
   /* eslint-enable no-console */
 
   return (

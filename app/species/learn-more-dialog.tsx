@@ -30,7 +30,7 @@ export default function LearnMoreDialog(species: Species) {
         </DialogHeader>
         {/* TODO: Conditionally add elements whose information we already have */}
         {species.image && (
-          <div className="relative h-40 w-full">
+          <div className="relative h-60 w-full">
             <Image src={species.image} alt={species.scientific_name} fill style={{ objectFit: "cover" }} />
           </div>
         )}
