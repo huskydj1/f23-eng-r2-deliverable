@@ -55,10 +55,12 @@ const speciesSchema = z.object({
 
 type FormData = z.infer<typeof speciesSchema>;
 
+// This function handles our "edit species" dialog, and is based on the "add species" dialog.
 export default function EditSpeciesDialog(species: Species) {
   const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
 
+  // Prefills form with existing species information
   const defaultValues: Partial<FormData> = {
     common_name: species.common_name,
     description: species.description,
@@ -82,6 +84,7 @@ export default function EditSpeciesDialog(species: Species) {
   const onSubmit = async (input: FormData) => {
     // The `input` prop contains data that has already been processed by zod. We can now use it in a supabase query
     const supabase = createClientComponentClient<Database>();
+    // Updates supabase, finding entry using id
     const { error } = await supabase
       .from("species")
       .update({

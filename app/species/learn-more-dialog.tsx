@@ -7,11 +7,10 @@ import type { Database } from "@/lib/schema";
 import Image from "next/image";
 import { useState } from "react";
 
-// We use zod (z) to define a schema for the "Add species" form.
-// zod handles validation of the input values with methods like .string(), .nullable(). It also processes the form inputs with .transform() before the inputs are sent to the database.
-
 type Species = Database["public"]["Tables"]["species"]["Row"];
 
+// This function handles our "learn more" dialog. It is passed a species object, and displays the
+// image, scientific_name, common_name, total_population, kingdom, and description.
 export default function LearnMoreDialog(species: Species) {
   const [open, setOpen] = useState<boolean>(false);
 
@@ -59,5 +58,3 @@ export default function LearnMoreDialog(species: Species) {
     </Dialog>
   );
 }
-
-// scientific_name, common_name, total_population, kingdom, and description

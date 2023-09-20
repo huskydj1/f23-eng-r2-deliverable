@@ -23,40 +23,24 @@ export default async function SpeciesList() {
 
   const { data: species } = await supabase.from("species").select("*");
 
+  // Passing the session id to the Species Card, in order to handle edit species dialog
   function SpeciesCardWithSession(a: Species) {
     return SpeciesCard(a, session ? session.user.id : "");
   }
 
+  // Sorting our species array in alphabetical order by common_name
   species?.sort(function (a, b) {
     if (a.common_name == null || b.common_name == null) {
       return 1;
     }
     return a.common_name.localeCompare(b.common_name);
   });
-  /* eslint-disable no-console */
-  // console.log(
-  //   species?.sort(function (a, b) {
-  //     return a.common_name.localeCompare(b.common_name);
-  //   }),
-  // );
-  /* eslint-enable no-console */
 
   return (
     <>
       <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
         <TypographyH2>Species List</TypographyH2>
         <AddSpeciesDialog key={new Date().getTime()} userId={session.user.id} />
-        {/* <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline">Open</Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={sortAlphabetically()}>Top</DropdownMenuItem>
-            <DropdownMenuItem onClick={sortAlphabetically()}>Bottom</DropdownMenuItem>
-            <DropdownMenuItem onClick={sortAlphabetically()}>Right</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu> */}
       </div>
       <Separator className="my-4" />
       <div className="flex flex-wrap justify-center">
